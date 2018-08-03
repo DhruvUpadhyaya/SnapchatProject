@@ -40,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
                     return ChatFragment.newInstance();
                 case 1:
                     // return fragment camera
-                    return CameraFragment.newInstance()
+                    return CameraFragment.newInstance();
                 case 2:
                     // return fragment story
-                    return StoryFragment.newInstance;
+                    return StoryFragment.newInstance();
             }
             return null;
         }

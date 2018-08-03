@@ -1,5 +1,6 @@
 package com.example.dhruvupadhyaya.snapchatclone;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -79,6 +80,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                     userInfo.put("name", name);
                                     userInfo.put("profileImageUrl", "default");
                                     currentUserDb.updateChildren(userInfo);
+
+                                    startActivity(new Intent(RegistrationActivity.this,MainActivity.class));
 
 
 

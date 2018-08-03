@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class StoryFragment extends Fragment {
-    public static StoryFragment newInstance{
+    public static StoryFragment newInstance(){
         StoryFragment fragment = new StoryFragment();
         return fragment;
     }

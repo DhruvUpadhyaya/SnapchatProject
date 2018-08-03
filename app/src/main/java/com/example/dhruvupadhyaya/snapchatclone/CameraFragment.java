@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class CameraFragment extends Fragment {
-    public static ChatFragment newInstance(){
+    public static CameraFragment newInstance(){
         CameraFragment fragment = new CameraFragment();
         return fragment;
     }
