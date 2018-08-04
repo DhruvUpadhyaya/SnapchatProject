@@ -1,5 +1,6 @@
 package com.example.dhruvupadhyaya.snapchatclone;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -12,13 +13,18 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.IOException;
+import java.util.List;
 
 public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
 
     Camera camera ;
+    Camera.PictureCallback jpegCallBack;
 
     final int CAMERA_REQUEST_CODE = 1;
 
@@ -36,6 +42,8 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
 
         View view = inflater.inflate(R.layout.fragment_camera,container,false);
 
+        mSurfaceView = view.findViewById(R.id.surfaceView);
+
         mSurfaceHolder = mSurfaceView.getHolder();
 
         if (ActivityCompat.checkSelfPermission(getContext(),android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -46,14 +54,48 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
 
         }
 
+        Button mLogout = view.findViewById(R.id.logoutId);
+        Button mCapture = view.findViewById(R.id.captureButtonId);
 
 
+        mLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LogOut();
+
+            }
+
+        });
+
+        mCapture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                captureImage();
+            }
+        });
+
+
+        jpegCallBack = new Camera.PictureCallback() {
+            @Override
+            public void onPictureTaken(byte[] bytes, Camera camera) {
+                Intent intent = new Intent(getActivity(),ShowCapturedImageActivity.class);
+                intent.putExtra("capture",bytes);
+                startActivity(intent);
+
+
+            }
+        };
 
 
 
         return view;
 
     }
+
+    private void captureImage() {
+        camera.takePicture(null,null,jpegCallBack);
+    }
+
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
@@ -65,6 +107,26 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
         camera.setDisplayOrientation(90);
         parameters.setPreviewFrameRate(30);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+
+
+        Camera.Size bestSize = null;
+
+        List<Camera.Size> sizeList = camera.getParameters().getSupportedPreviewSizes();
+        bestSize = sizeList.get(0);
+
+        for (int i = 1; i<sizeList.size(); i++){
+            if ((sizeList.get(i).width * sizeList.get(i).height) > (bestSize.width * bestSize.height)){
+                bestSize = sizeList.get(i);
+
+            }
+        }
+
+
+
+        parameters.setPreviewSize(bestSize.width,bestSize.height);
+       // camera.startPreview();
+
+        camera.setParameters(parameters);
 
         try {
             camera.setPreviewDisplay(surfaceHolder);
@@ -99,5 +161,13 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
                 break;
             }
         }
+    }
+
+    private void LogOut() {
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(getContext(),SplashScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 }
