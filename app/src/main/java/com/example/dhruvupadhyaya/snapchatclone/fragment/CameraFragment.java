@@ -1,4 +1,4 @@
-package com.example.dhruvupadhyaya.snapchatclone;
+package com.example.dhruvupadhyaya.snapchatclone.fragment;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -16,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.dhruvupadhyaya.snapchatclone.FindUsersActivity;
+import com.example.dhruvupadhyaya.snapchatclone.R;
+import com.example.dhruvupadhyaya.snapchatclone.ShowCapturedImageActivity;
+import com.example.dhruvupadhyaya.snapchatclone.loginRegistration.SplashScreenActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.IOException;
@@ -56,8 +59,15 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
 
         Button mLogout = view.findViewById(R.id.logoutId);
         Button mCapture = view.findViewById(R.id.captureButtonId);
+        Button mFindUsers = view.findViewById(R.id.findUserButtonId);
 
 
+        mFindUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FindUsers();
+            }
+        });
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,6 +81,11 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
             @Override
             public void onClick(View view) {
                 captureImage();
+
+
+
+
+
             }
         });
 
@@ -79,6 +94,7 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
                 Intent intent = new Intent(getActivity(),ShowCapturedImageActivity.class);
+               // intent.putExtra("capture",bytes);
                 intent.putExtra("capture",bytes);
                 startActivity(intent);
 
@@ -91,6 +107,8 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
         return view;
 
     }
+
+
 
     private void captureImage() {
         camera.takePicture(null,null,jpegCallBack);
@@ -167,6 +185,13 @@ public class CameraFragment extends Fragment implements SurfaceHolder.Callback {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(getContext(),SplashScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
+    }
+
+    private void FindUsers() {
+
+        Intent intent = new Intent(getContext(),FindUsersActivity.class);
         startActivity(intent);
 
     }

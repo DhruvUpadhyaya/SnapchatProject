@@ -1,10 +1,12 @@
-package com.example.dhruvupadhyaya.snapchatclone;
+package com.example.dhruvupadhyaya.snapchatclone.loginRegistration;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.dhruvupadhyaya.snapchatclone.R;
 
 public class ChooseLoginRegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 

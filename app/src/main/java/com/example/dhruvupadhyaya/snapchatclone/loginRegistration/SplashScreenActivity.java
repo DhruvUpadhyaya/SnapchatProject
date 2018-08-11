@@ -1,9 +1,12 @@
-package com.example.dhruvupadhyaya.snapchatclone;
+package com.example.dhruvupadhyaya.snapchatclone.loginRegistration;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.dhruvupadhyaya.snapchatclone.MainActivity;
+import com.example.dhruvupadhyaya.snapchatclone.R;
+import com.example.dhruvupadhyaya.snapchatclone.loginRegistration.ChooseLoginRegistrationActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashScreenActivity extends AppCompatActivity {
