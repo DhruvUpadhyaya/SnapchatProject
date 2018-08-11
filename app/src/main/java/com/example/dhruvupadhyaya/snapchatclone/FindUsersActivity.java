@@ -7,6 +7,11 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.dhruvupadhyaya.snapchatclone.RecyclerViewFollow.RCadapter;
+import com.example.dhruvupadhyaya.snapchatclone.RecyclerViewFollow.UsersObject;
+
+import java.util.ArrayList;
+
 public class FindUsersActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -30,5 +35,13 @@ public class FindUsersActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(getApplication());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mAdapter = new RCadapter(getDataSet(),getApplication());
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
+
+    private ArrayList<UsersObject> results = new ArrayList<>();
+    private ArrayList<UsersObject> getDataSet() {
+        return results;
     }
 }
